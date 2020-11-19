@@ -1,0 +1,28 @@
+{
+    "imgPath": "",
+    "jobName": "Update-Wallpaper",
+
+    "schedule": {
+        "dayDelay": 2,
+        "updateTime": "14:00"
+    },
+
+    "apikey": "",
+
+    "options": {
+        "orientation": "landscape",
+        "contentFilter": "low"
+    },
+
+    "collections": [
+        "1065396",
+        "4918232",
+        "8337298",
+        "2383530",
+        "9475150",
+        "8678136",
+        "1483713",
+        "1592412",
+        "3522730"
+    ]
+}
