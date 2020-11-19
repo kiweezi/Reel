@@ -62,19 +62,22 @@ function Start-Main {
 
     # Register the scheduled job or update any existing job.
     if ($null -eq (Get-ScheduledJob -Name $cfg.jobName -ErrorAction Ignore)) {
-        Write-Host "Created scheduled job: $($cfg.jobName)"
+        # Run the update once.
+        $imgUrl = (Invoke-RestMethod -Uri $uri).urls.full
+        Invoke-RestMethod -Uri $imgUrl -OutFile $imgPath
     }
     else {
+        # Unregister the previous version.
         Unregister-ScheduledJob -Name $cfg.jobName
-        Write-Host "Updated scheduled job: $($cfg.jobName)"
     }
 
     # Register the scheduled job with an additional trigger.
     Register-ScheduledJob -Name $cfg.jobName -ScheduledJobOption $option -Trigger $trigger -ScriptBlock $script -ArgumentList $imgPath, $uri
     Get-ScheduledJob -Name $cfg.jobName | Add-JobTrigger -Trigger (New-JobTrigger -AtStartup)
-    # Run the update once.
-    $imgUrl = (Invoke-RestMethod -Uri $uri).urls.full
-    Invoke-RestMethod -Uri $imgUrl -OutFile $imgPath
+
+    # Log.
+    Write-Host "Set scheduled job: $($cfg.jobName)"
+    Start-Sleep -Seconds 1
 }
 
 
