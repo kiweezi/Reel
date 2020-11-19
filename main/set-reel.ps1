@@ -48,7 +48,7 @@ function Start-Main {
         $result = Get-Job -Name "Update-Wallpaper" -Newest 2
         # If the previous update failed or the schedule is met, update the wallpaper.
         if (($result[0].State -eq "Failed") -or 
-        ([int]($result.PSBeginTime).TimeOfDay.TotalMinutes -in 1010..1030))
+        ([int]($result[1].PSBeginTime).TimeOfDay.TotalMinutes -in 1010..1030))
         {
             # Get the image url and download it to the image path, overwriting the previous.
             $imgUrl = (Invoke-RestMethod -Uri $uri).urls.full
